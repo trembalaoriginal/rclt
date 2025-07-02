@@ -1,59 +1,141 @@
+/* Importa a fonte Orbitron do Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Orbitron', sans-serif;
-  background: url('/background.jpg') no-repeat center center fixed;
-  background-size: cover;
-  color: #e0ffe0;
+  font-family: 'Arial', sans-serif;
+  background-color: #0a0f0d; /* Fundo bem escuro como fallback */
+  color: #e0ffe0; /* Texto claro */
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   min-height: 100vh;
   overflow-x: hidden;
+
+  /* NOVO: Imagem da bruxa como plano de fundo */
+  background-image: url('/public/witch-background.jpg');
+  background-size: cover; /* Cobre todo o fundo */
+  background-position: center center; /* Centraliza a imagem */
+  background-repeat: no-repeat;
+  background-attachment: fixed; /* Fixa o fundo, não rola */
+
+  /* Adiciona um overlay escuro para melhorar contraste com o texto */
+  position: relative; /* Para o pseudo-elemento ::before */
+}
+
+body::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Overlay preto com 50% de opacidade */
+  z-index: -1; /* Garante que fique atrás do conteúdo */
 }
 
 h1 {
-  font-size: 2.5rem;
-  color: #7dffa7;
-  text-shadow: 2px 2px #000;
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 700;
+  font-size: 2.8em;
+  color: #9aff9a;
+  text-shadow: 0 0 10px #7eff7e, 0 0 20px #7eff7e, 0 0 30px #7eff7e;
+  margin-bottom: 20px;
+}
+
+h2 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.5em;
+  color: #c0ffc0;
+  margin-top: 10px;
+}
+
+button {
+  padding: 12px 25px;
+  font-size: 20px;
+  background-color: #2ecc71;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  cursor: pointer;
   margin-top: 30px;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+  box-shadow: 0 5px 15px rgba(46, 204, 113, 0.4);
+}
+
+button:hover {
+  transform: scale(1.1);
+  background-color: #27ae60;
+  box-shadow: 0 8px 20px rgba(46, 204, 113, 0.6);
+}
+
+button:disabled {
+  background-color: #555;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
 }
 
 #wheel-container {
   position: relative;
-  width: 300px;
-  height: 300px;
+  width: 400px; /* Aumenta um pouco mais para a nova imagem */
+  height: 400px;
   margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0 50px rgba(126, 255, 126, 0.5), 0 0 100px rgba(126, 255, 126, 0.3);
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.2);
+  /* Opcional: Adiciona uma borda sutil para definir melhor o espaço da roda */
+  /* border: 2px solid rgba(126, 255, 126, 0.3); */
+  overflow: hidden; /* Garante que a imagem da roda não saia do contêiner */
 }
 
 #wheel {
   width: 100%;
   height: 100%;
   transition: transform 5s cubic-bezier(0.25, 1, 0.5, 1);
+  /* NOVO: Usando a nova imagem para a roda */
+  background-image: url('/public/cosmic-wheel.jpg');
+  background-size: contain; /* Ajusta a imagem dentro do contêiner */
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-color: transparent; /* Certifica que não há fundo sólido por trás */
+
+  /* Efeito para tentar misturar o fundo da imagem da roda */
+  /* Isso é um palpite e pode precisar de ajustes ou de uma imagem PNG transparente */
+  mix-blend-mode: screen; /* Experimente 'lighten' ou 'color-dodge' também */
+  /* filter: drop-shadow(0 0 5px rgba(0,255,0,0.5)); */ /* Pode adicionar um brilho verde */
+  /* filter: contrast(150%) brightness(120%); */ /* Aumenta contraste e brilho */
 }
 
-button {
-  padding: 12px 24px;
-  font-size: 18px;
-  background-color: #2ecc71;
-  border: none;
-  border-radius: 10px;
-  color: white;
-  cursor: pointer;
-  margin-top: 20px;
-  transition: transform 0.3s ease;
-}
-
-button:hover {
-  transform: scale(1.05);
-  background-color: #27ae60;
+#wheel-pointer {
+  position: absolute;
+  top: -25px; /* Ajuste a posição conforme necessário */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 15px solid transparent;
+  border-right: 15px solid transparent;
+  border-bottom: 30px solid #ff4500; /* Cor laranja avermelhada */
+  z-index: 10;
+  filter: drop-shadow(0 0 10px #ff4500);
 }
 
 #reward {
   margin-top: 30px;
-  font-size: 20px;
+  font-size: 22px;
   color: #7eff7e;
+  font-weight: bold;
   text-align: center;
-  padding: 10px;
+  padding: 10px 20px;
+  border: 1px solid #7eff7e;
+  border-radius: 10px;
+  background-color: rgba(126, 255, 126, 0.05);
+  box-shadow: 0 0 15px rgba(126, 255, 126, 0.5);
+  transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
 }
